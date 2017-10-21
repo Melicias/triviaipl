@@ -10,9 +10,15 @@
         <!--<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css"> -->
     </head>
     <body>
+        
+        <%@include file="menu.jsp" %>
+        
         <div class="container" id="contentor">
             
         </div>
+        
+        <%@include file="footer.jsp" %>
+        
         <script src="js/jquery-3.1.1.js"></script>
         <script src="js/bootstrap.min.js"></script> 
         <script src="js/my.js"></script>
