@@ -16,5 +16,9 @@
     font-size: 70px;
 }
 
+#div_butoes_inicio_menu{
+    display: table;
+    margin: 0 auto;
+}
 
 
