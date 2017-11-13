@@ -88,6 +88,11 @@ $(document).ready(function(){
     
     function generarLinkAPI(){
         var link = "https://opentdb.com/api.php?amount=10&category=" + categoria + "&difficulty="+ dificuldade;
+        $.getJSON(link, function(data) {
+            //data is the JSON string
+            //criar array com isto, e assim que s saca a informacao do data
+            var a = data.results[1].category;
+        });
     }
     
     //https://www.w3schools.com/html/html5_webstorage.asp
