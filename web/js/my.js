@@ -13,6 +13,7 @@ $(document).ready(function(){
     
     var dificuldade; //dificuldade facil(easy) / dificuldade media(medium)
     var categoria;
+    var perguntas = new Array();
     
     
     //Butao adicionar
@@ -91,7 +92,16 @@ $(document).ready(function(){
         $.getJSON(link, function(data) {
             //data is the JSON string
             //criar array com isto, e assim que s saca a informacao do data
-            var a = data.results[1].category;
+            perguntas = data.results;
+            if (typeof(Storage) !== "undefined") {
+                localStorage.setItem('perguntas', JSON.stringify(perguntas));
+                //get local storage
+                //var retrievedObject = localStorage.getItem('perguntas');
+                //perguntas = JSON.parse(retrievedObject);
+            } else {
+                alert("Your browser does not support Web Storage...");
+            }
+            
         });
     }
     
