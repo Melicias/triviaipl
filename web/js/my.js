@@ -14,6 +14,7 @@ $(document).ready(function(){
     var dificuldade; //dificuldade facil(easy) / dificuldade media(medium)
     var categoria;
     var perguntas = new Array();
+    var nrpergunta = -1;
     
     
     //Butao adicionar
@@ -98,11 +99,44 @@ $(document).ready(function(){
                 //get local storage
                 //var retrievedObject = localStorage.getItem('perguntas');
                 //perguntas = JSON.parse(retrievedObject);
+                
+                //Envio o 0 para comecar a contar desde o 0;
+                comecarAsPerguntas(0);
             } else {
                 alert("Your browser does not support Web Storage...");
             }
             
         });
+    }
+    
+    function comecarAsPerguntas(var id){
+        nrpergunta = id;
+        localStorage.setItem('nrpergunta', nrpergunta);
+        if(perguntas.type == "boolean"){
+            //codigo de html com os botoes verdadeiro e falso.
+            $("#contentor").html("");
+        }else{
+            //codigo para escolher um botao aleatoriamente para ser a opcao certa.
+            //O primeiro numero do array vai ser o numero que tera a resposta correta
+            var correto = Math.floor((Math.random() * 4) + 1);
+            var butoes = "";
+            
+            for(int i=1;i<=4;i++){
+                if(i == correto){
+                    //adicionar a variavel butoes um botao com a respota correta
+                    var butoes += "";
+                }else{
+                    var incorreto = data.incorrect_answers[i-1];
+                    //adicionar a variavel butoes um botao com a incorrectanswers
+                    var butoes += "";
+                }
+                
+            }
+            
+            //codigo de html com 4 botoes para fazer os 4 opcoes de escolhas.
+            $("#contentor").html(butoes);
+        }
+        
     }
     
     //https://www.w3schools.com/html/html5_webstorage.asp
