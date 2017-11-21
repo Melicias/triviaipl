@@ -18,6 +18,8 @@ $(document).ready(function(){
     var perguntas = new Array();
     var nrpergunta = -1;
     var nomeJogador;
+    var respostas = new Array();
+    
     
     
     //Butao adicionar
@@ -101,24 +103,24 @@ $(document).ready(function(){
         //generarLinkAPI();
     }
 	
-	function iniciarJogo(){
-		$("#contentor").html("<div id='div_iniciar_jogo'>\n\
-                                <h2>Opções do jogo: </h2>\n\
-                                <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
-                                <p>Categoria: "+ scategoria +"</p><br>\n\
-                                Nome do jogador: <input type='text' id='username' name='username'><br>\n\
-                                <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
-                            </div>"); 
-	}
-	
-	$(document).on("click","#iniciarJogoUsername",function(){
-		nomeJogador = $('#username').val();
-		if(nomeJogador != "" && nomeJogador.length > 2){
-                    generarLinkAPI();
-		}else{
-                    alert("O nome tem de ter pelo menos 3 carateres!");
-		}
-	});
+    function iniciarJogo(){
+            $("#contentor").html("<div id='div_iniciar_jogo'>\n\
+                            <h2>Opções do jogo: </h2>\n\
+                            <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
+                            <p>Categoria: "+ scategoria +"</p><br>\n\
+                            Nome do jogador: <input type='text' id='username' name='username'><br>\n\
+                            <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
+                        </div>"); 
+    }
+
+    $(document).on("click","#iniciarJogoUsername",function(){
+            nomeJogador = $('#username').val();
+            if(nomeJogador != "" && nomeJogador.length > 2){
+                generarLinkAPI();
+            }else{
+                alert("O nome tem de ter pelo menos 3 carateres!");
+            }
+    });
     
     function generarLinkAPI(){
         var link = "https://opentdb.com/api.php?amount=10&category=" + categoria + "&difficulty="+ dificuldade;
@@ -144,6 +146,7 @@ $(document).ready(function(){
     function comecarAsPerguntas(id){
         nrpergunta = id;
         localStorage.setItem('nrpergunta', nrpergunta);
+        localStorage.setItem('respostas', JSON.stringify(respostas));
         if(perguntas[nrpergunta].type == "boolean"){
             //codigo de html com os botoes verdadeiro e falso.
             $("#contentor").html("");
@@ -152,26 +155,54 @@ $(document).ready(function(){
             //O primeiro numero do array vai ser o numero que tera a resposta correta
             var correto = Math.floor((Math.random() * 4) + 1);
             var butoes = "<div id='div_escolha_multipla'>\n\
-                            <p> " + perguntas[nrpergunta].question + "</p>";
+                            <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
             var ii = 0;	
             for(var i=1;i<=4;i++){
                 if(i == correto){
                     //adicionar a variavel butoes um botao com a respota correta
-                    butoes += "<button id='butaoRespostaCorreta' type='button' style=' margin:30px; width:100px ; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; width:100px ; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
                 }else{
-                    var incorreto = perguntas[nrpergunta].incorrect_answers[ii];
                     //adicionar a variavel butoes um botao com a incorrectanswers
-                    butoes += "";
+                    butoes += "<button id='botaoRespostaIncorreta" + ii + "' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers[ii]; + "</button>";
                     ii++;
                 }
-                
             }
             butoes += "</div>";
             //adicionar a variavel butoes butoes para adicionar aos favs.
             //codigo de html com 4 botoes para fazer os 4 opcoes de escolhas.
             $("#contentor").html(butoes);
         }
-        
+    }
+    
+    $(document).on("click","#botaoRespostaCorreta",function(){
+        respostas.push("1");
+        proximaPergunta();
+    });
+    
+    $(document).on("click","#botaoRespostaIncorreta0",function(){
+        respostas.push("0");
+        proximaPergunta();
+    });
+    
+    $(document).on("click","#botaoRespostaIncorreta1",function(){
+        respostas.push("0");
+        proximaPergunta();
+    });
+    
+    $(document).on("click","#botaoRespostaIncorreta2",function(){
+        respostas.push("0");
+        proximaPergunta();
+    });
+    
+    function proximaPergunta(){
+        if((nrpergunta+1) == 11){
+            //CODIGO PARA ACABAR AS PERGUNTAS - mostrar pontuacao
+            //RESET DO JOGO
+            //VOLTAR A PAGINA INICIAL
+            //RESETAR VARIAVEIS GUARDADAS NO BROWSER
+        }else{
+            comecarAsPerguntas((nrpergunta+1));
+        }
     }
     
     //https://www.w3schools.com/html/html5_webstorage.asp
