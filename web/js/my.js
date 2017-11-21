@@ -144,7 +144,7 @@ $(document).ready(function(){
     function comecarAsPerguntas(id){
         nrpergunta = id;
         localStorage.setItem('nrpergunta', nrpergunta);
-        if(perguntas.type == "boolean"){
+        if(perguntas[nrpergunta].type == "boolean"){
             //codigo de html com os botoes verdadeiro e falso.
             $("#contentor").html("");
         }else{
@@ -152,19 +152,21 @@ $(document).ready(function(){
             //O primeiro numero do array vai ser o numero que tera a resposta correta
             var correto = Math.floor((Math.random() * 4) + 1);
             var butoes = "";
-            
+            var ii = 0;
+			
             for(var i=1;i<=4;i++){
                 if(i == correto){
                     //adicionar a variavel butoes um botao com a respota correta
                     butoes += "";
                 }else{
-                    var incorreto = perguntas[nrpergunta].incorrect_answers[i-1];
+                    var incorreto = perguntas[nrpergunta].incorrect_answers[ii];
                     //adicionar a variavel butoes um botao com a incorrectanswers
                     butoes += "";
+					ii++;
                 }
                 
             }
-            
+            //adicionar a variavel butoes butoes para adicionar aos favs.
             //codigo de html com 4 botoes para fazer os 4 opcoes de escolhas.
             $("#contentor").html(butoes);
         }
