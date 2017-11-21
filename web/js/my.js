@@ -12,12 +12,12 @@ $(document).ready(function(){
     //$("#contentor").load("inicio_menu.html");
     
     var dificuldade; //dificuldade facil(easy) / dificuldade media(medium)
-	var sdificuldade;
+    var sdificuldade;
     var categoria;
-	var scategoria;
+    var scategoria;
     var perguntas = new Array();
     var nrpergunta = -1;
-	var nomeJogador;
+    var nomeJogador;
     
     
     //Butao adicionar
@@ -35,12 +35,12 @@ $(document).ready(function(){
     
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
-		sdificuldade = "Fácil";
+	sdificuldade = "Fácil";
         escolherDificuldade("easy");
     });
     
     $(document).on("click","#butaoDificuldadeMedia",function(){
-		sdificuldade = "Média";
+	sdificuldade = "Média";
         escolherDificuldade("medium");
     });
     
@@ -56,17 +56,17 @@ $(document).ready(function(){
     }
     
     $(document).on("click","#botaoinformatica",function(){
-		scategoria = "Informática";
+	scategoria = "Informática";
         escolherCategoria(18);
     });
     
     $(document).on("click","#botaojogos",function(){
-		scategoria = "Video-Jogos";
+	scategoria = "Video-Jogos";
         escolherCategoria(15);
     });
     
     $(document).on("click","#botaodesporto",function(){
-		scategoria = "Desporto";
+	scategoria = "Desporto";
         escolherCategoria(21);
     });
     
@@ -82,19 +82,19 @@ $(document).ready(function(){
             switch(random){
                 case 1:
                     categoria = 18;
-					scategoria = "Informática";
+                    scategoria = "Informática";
                     break;
                 case 2:
                     categoria = 15;
-					scategoria = "Video-Jogos";
+                    scategoria = "Video-Jogos";
                     break;
                 case 3:
                     categoria = 21;
-					scategoria = "Desporto";
+                    scategoria = "Desporto";
                     break;
                 default:
                     categoria = 18;
-					scategoria = "Informática";
+                    scategoria = "Informática";
             }
         }
 		iniciarJogo();
@@ -104,9 +104,9 @@ $(document).ready(function(){
 	function iniciarJogo(){
 		$("#contentor").html("<div id='div_iniciar_jogo'>\n\
                                 <h2>Opções do jogo: </h2>\n\
-								<p>Dificuldade: "+ sdificuldade +"</p><br>\n\
-								<p>Categoria: "+ scategoria +"</p><br>\n\
-								Nome do jogador: <input type='text' id='username' name='username'><br>\n\
+                                <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
+                                <p>Categoria: "+ scategoria +"</p><br>\n\
+                                Nome do jogador: <input type='text' id='username' name='username'><br>\n\
                                 <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
                             </div>"); 
 	}
@@ -114,9 +114,9 @@ $(document).ready(function(){
 	$(document).on("click","#iniciarJogoUsername",function(){
 		nomeJogador = $('#username').val();
 		if(nomeJogador != "" && nomeJogador.length > 2){
-			generarLinkAPI();
+                    generarLinkAPI();
 		}else{
-			alert("O nome tem de ter pelo menos 3 carateres!");
+                    alert("O nome tem de ter pelo menos 3 carateres!");
 		}
 	});
     
@@ -151,21 +151,22 @@ $(document).ready(function(){
             //codigo para escolher um botao aleatoriamente para ser a opcao certa.
             //O primeiro numero do array vai ser o numero que tera a resposta correta
             var correto = Math.floor((Math.random() * 4) + 1);
-            var butoes = "";
-            var ii = 0;
-			
+            var butoes = "<div id='div_escolha_multipla'>\n\
+                            <p> " + perguntas[nrpergunta].question + "</p>";
+            var ii = 0;	
             for(var i=1;i<=4;i++){
                 if(i == correto){
                     //adicionar a variavel butoes um botao com a respota correta
-                    butoes += "";
+                    butoes += "<button id='butaoRespostaCorreta' type='button' style=' margin:30px; width:100px ; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
                 }else{
                     var incorreto = perguntas[nrpergunta].incorrect_answers[ii];
                     //adicionar a variavel butoes um botao com a incorrectanswers
                     butoes += "";
-					ii++;
+                    ii++;
                 }
                 
             }
+            butoes += "</div>";
             //adicionar a variavel butoes butoes para adicionar aos favs.
             //codigo de html com 4 botoes para fazer os 4 opcoes de escolhas.
             $("#contentor").html(butoes);
