@@ -12,9 +12,12 @@ $(document).ready(function(){
     //$("#contentor").load("inicio_menu.html");
     
     var dificuldade; //dificuldade facil(easy) / dificuldade media(medium)
+	var sdificuldade;
     var categoria;
+	var scategoria;
     var perguntas = new Array();
     var nrpergunta = -1;
+	var nomeJogador;
     
     
     //Butao adicionar
@@ -32,10 +35,12 @@ $(document).ready(function(){
     
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
+		sdificuldade = "Fácil";
         escolherDificuldade("easy");
     });
     
     $(document).on("click","#butaoDificuldadeMedia",function(){
+		sdificuldade = "Média";
         escolherDificuldade("medium");
     });
     
@@ -51,14 +56,17 @@ $(document).ready(function(){
     }
     
     $(document).on("click","#botaoinformatica",function(){
+		scategoria = "Informática";
         escolherCategoria(18);
     });
     
     $(document).on("click","#botaojogos",function(){
+		scategoria = "Video-Jogos";
         escolherCategoria(15);
     });
     
     $(document).on("click","#botaodesporto",function(){
+		scategoria = "Desporto";
         escolherCategoria(21);
     });
     
@@ -74,19 +82,43 @@ $(document).ready(function(){
             switch(random){
                 case 1:
                     categoria = 18;
+					scategoria = "Informática";
                     break;
                 case 2:
                     categoria = 15;
+					scategoria = "Video-Jogos";
                     break;
                 case 3:
                     categoria = 21;
+					scategoria = "Desporto";
                     break;
                 default:
                     categoria = 18;
+					scategoria = "Informática";
             }
         }
-         generarLinkAPI();
+		iniciarJogo();
+        //generarLinkAPI();
     }
+	
+	function iniciarJogo(){
+		$("#contentor").html("<div id='div_iniciar_jogo'>\n\
+                                <h2>Opções do jogo: </h2>\n\
+								<p>Dificuldade: "+ sdificuldade +"</p><br>\n\
+								<p>Categoria: "+ scategoria +"</p><br>\n\
+								Nome do jogador: <input type='text' id='username' name='username'><br>\n\
+                                <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
+                            </div>"); 
+	}
+	
+	$(document).on("click","#iniciarJogoUsername",function(){
+		nomeJogador = $('#username').val();
+		if(nomeJogador != "" && nomeJogador.length > 2){
+			generarLinkAPI();
+		}else{
+			alert("O nome tem de ter pelo menos 3 carateres!");
+		}
+	});
     
     function generarLinkAPI(){
         var link = "https://opentdb.com/api.php?amount=10&category=" + categoria + "&difficulty="+ dificuldade;
@@ -109,7 +141,7 @@ $(document).ready(function(){
         });
     }
     
-    function comecarAsPerguntas(var id){
+    function comecarAsPerguntas(id){
         nrpergunta = id;
         localStorage.setItem('nrpergunta', nrpergunta);
         if(perguntas.type == "boolean"){
@@ -121,14 +153,14 @@ $(document).ready(function(){
             var correto = Math.floor((Math.random() * 4) + 1);
             var butoes = "";
             
-            for(int i=1;i<=4;i++){
+            for(var i=1;i<=4;i++){
                 if(i == correto){
                     //adicionar a variavel butoes um botao com a respota correta
-                    var butoes += "";
+                    butoes += "";
                 }else{
-                    var incorreto = data.incorrect_answers[i-1];
+                    var incorreto = perguntas[nrpergunta].incorrect_answers[i-1];
                     //adicionar a variavel butoes um botao com a incorrectanswers
-                    var butoes += "";
+                    butoes += "";
                 }
                 
             }
