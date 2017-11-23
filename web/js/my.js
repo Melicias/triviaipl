@@ -18,14 +18,15 @@ $(document).ready(function(){
     var perguntas = new Array();
     var nrpergunta = -1;
     var nomeJogador;
+    //no array respotas tera o valor 3 caso tenha acertado na respota e tera o valor 0;1;2 caso tenha errada na pergunta e o seu valor ira corresponder a sau posicao no array de incorretas
     var respostas = new Array();
     
     
-    
+    //REMOVER O COMENTARIO APRA O CODIGO FUNCIONAR
     //Butao adicionar
-    $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
-                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
-                         </div>");
+    //$("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
+    //                        <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+    //                     </div>");
     
     $("#butaoIniciarJogo").click(function(){
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
@@ -104,13 +105,13 @@ $(document).ready(function(){
     }
 	
     function iniciarJogo(){
-            $("#contentor").html("<div id='div_iniciar_jogo'>\n\
-                            <h2>Opções do jogo: </h2>\n\
-                            <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
-                            <p>Categoria: "+ scategoria +"</p><br>\n\
-                            Nome do jogador: <input type='text' id='username' name='username'><br>\n\
-                            <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
-                        </div>"); 
+        $("#contentor").html("<div id='div_iniciar_jogo'>\n\
+                        <h2>Opções do jogo: </h2>\n\
+                        <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
+                        <p>Categoria: "+ scategoria +"</p><br>\n\
+                        Nome do jogador: <input type='text' id='username' name='username'><br>\n\
+                        <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
+                    </div>"); 
     }
 
     $(document).on("click","#iniciarJogoUsername",function(){
@@ -130,6 +131,7 @@ $(document).ready(function(){
             perguntas = data.results;
             if (typeof(Storage) !== "undefined") {
                 localStorage.setItem('perguntas', JSON.stringify(perguntas));
+                localStorage.setItem('nomeJogador', nomeJogador);
                 //get local storage
                 //var retrievedObject = localStorage.getItem('perguntas');
                 //perguntas = JSON.parse(retrievedObject);
@@ -146,7 +148,6 @@ $(document).ready(function(){
     function comecarAsPerguntas(id){
         nrpergunta = id;
         localStorage.setItem('nrpergunta', nrpergunta);
-        localStorage.setItem('respostas', JSON.stringify(respostas));
         if(perguntas[nrpergunta].type == "boolean"){
             //codigo de html com os botoes verdadeiro e falso.
             $("#contentor").html("");
@@ -160,7 +161,7 @@ $(document).ready(function(){
             for(var i=1;i<=4;i++){
                 if(i == correto){
                     //adicionar a variavel butoes um botao com a respota correta
-                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; width:100px ; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
                 }else{
                     //adicionar a variavel butoes um botao com a incorrectanswers
                     butoes += "<button id='botaoRespostaIncorreta" + ii + "' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers[ii]; + "</button>";
@@ -168,14 +169,14 @@ $(document).ready(function(){
                 }
             }
             butoes += "</div>";
-            //adicionar a variavel butoes butoes para adicionar aos favs.
+            //adicionar a variavel butoes butoes para adicionar aos favs. FALTA FAZER ISTO
             //codigo de html com 4 botoes para fazer os 4 opcoes de escolhas.
             $("#contentor").html(butoes);
         }
     }
     
     $(document).on("click","#botaoRespostaCorreta",function(){
-        respostas.push("1");
+        respostas.push("3");
         proximaPergunta();
     });
     
@@ -185,24 +186,55 @@ $(document).ready(function(){
     });
     
     $(document).on("click","#botaoRespostaIncorreta1",function(){
-        respostas.push("0");
+        respostas.push("1");
         proximaPergunta();
     });
     
     $(document).on("click","#botaoRespostaIncorreta2",function(){
-        respostas.push("0");
+        respostas.push("2");
         proximaPergunta();
     });
     
     function proximaPergunta(){
-        if((nrpergunta+1) == 11){
+        localStorage.setItem('respostas', JSON.stringify(respostas));
+        if((nrpergunta+1) == (perguntas.length+1)){
             //CODIGO PARA ACABAR AS PERGUNTAS - mostrar pontuacao
-            //RESET DO JOGO
+            mostrarPontuacao();
+            //RESET DO JOGO //RESETAR VARIAVEIS GUARDADAS NO BROWSER
+            resetVariaveis();
             //VOLTAR A PAGINA INICIAL
-            //RESETAR VARIAVEIS GUARDADAS NO BROWSER
         }else{
             comecarAsPerguntas((nrpergunta+1));
         }
+    }
+    
+    function mostrarPontuacao(){
+        var html = "";
+        for(int i = 0;i<= perguntas.length; i++){
+            
+        }
+        $("#contentor").html("<div id='div_iniciar_jogo'>\n\
+                            <h2>Opções do jogo: </h2>\n\
+                            <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
+                            <p>Categoria: "+ scategoria +"</p><br>\n\
+                            Nome do jogador: <input type='text' id='username' name='username'><br>\n\
+                            <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
+                        </div>"); 
+    }
+    
+    function resetVariaveis(){
+        dificuldade = "";
+        sdificuldade = "";
+        categoria = "";
+        scategoria = "";
+        perguntas = new Array();
+        nrpergunta = -1;
+        nomeJogador = "";
+        respostas = new Array();
+        localStorage.removeItem("respostas");
+        localStorage.removeItem("nrpergunta");
+        localStorage.removeItem("perguntas");
+        localStorage.removeItem("nomeJogador");
     }
     
     //https://www.w3schools.com/html/html5_webstorage.asp
