@@ -1,22 +1,9 @@
-<<<<<<< HEAD
-.footer {
-  position: absolute;
-  bottom: -80px;
-  width: 100%;
-  height: 60px;
-  text-align: center;
-  line-height: 60px;
-  background-color: #000;
-=======
-
-
 .footer{
     width: 100%;
     background-color: #000;
     padding: 20px 80px;
     color: white;
     text-align: center;
->>>>>>> b195c4f242d736f78ec3fb8f76095dec390b6b27
 }
 
 .letraBranca{
@@ -47,7 +34,6 @@
 }
 #div_respostas_boolean{
     display: table;
-<<<<<<< HEAD
     margin: 0 auto;
     display: block; 
     margin:30px;
@@ -63,7 +49,6 @@
     width:200px ;
     height: 100px;
     font-size: 35px;
-=======
     margin: 0 auto;   
 }
 
@@ -81,5 +66,4 @@
     border: 5px solid grey;
     margin: 25px 50px 10px 10px;
     padding-left: 20px;
->>>>>>> b195c4f242d736f78ec3fb8f76095dec390b6b27
 }
