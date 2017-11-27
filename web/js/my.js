@@ -20,13 +20,15 @@ $(document).ready(function(){
     var nomeJogador;
     //no array respotas tera o valor 3 caso tenha acertado na respota e tera o valor 0;1;2 caso tenha errada na pergunta e o seu valor ira corresponder a sau posicao no array de incorretas
     var respostas = new Array();
+    var favs = new Array();
+    var topTen = new Array();
     
     
-    //REMOVER O COMENTARIO APRA O CODIGO FUNCIONAR
+    //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
     //Butao adicionar
-    //$("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
-    //                        <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
-    //                     </div>");
+    $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
+                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+                         </div>");
     
     $("#butaoIniciarJogo").click(function(){
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
@@ -51,10 +53,10 @@ $(document).ready(function(){
     function escolherDificuldade(id){
         dificuldade = id;
         $("#contentor").html("<div id='div_escolher_categoria'>\n\
-                                <button type='button' id='botaoinformatica' style=' margin:30px; width:200px ; height: 100px; font-size: 25px;' class='btn btn-primary'>Informática</button>\n\
-                                <button type='button' id='botaojogos' style=' margin:30px; width:200px ; height: 100px; font-size: 25px;' class='btn btn-primary'>Video-Jogos</button>\n\
-                                <button type='button' id='botaodesporto' style=' margin:30px; width:200px ; height: 100px; font-size: 25px;' class='btn btn-primary'>Desporto</button>\n\
-                                <button type='button' id='botaoRandom' style=' margin:30px; width:200px ; height: 100px; font-size: 25px;' class='btn btn-primary'>Random</button>\n\
+                                <button type='button' id='botaoinformatica' class='btn btn-primary butoesCategoria'>Informática</button>\n\
+                                <button type='button' id='botaojogos' class='btn btn-primary butoesCategoria'>Video-Jogos</button>\n\
+                                <button type='button' id='botaodesporto' class='btn btn-primary butoesCategoria'>Desporto</button>\n\
+                                <button type='button' id='botaoRandom' class='btn btn-primary butoesCategoria'>Random</button>\n\
                               </div>"); 
     }
     
@@ -100,7 +102,7 @@ $(document).ready(function(){
                     scategoria = "Informática";
             }
         }
-		iniciarJogo();
+        iniciarJogo();
         //generarLinkAPI();
     }
 	
@@ -150,7 +152,11 @@ $(document).ready(function(){
         localStorage.setItem('nrpergunta', nrpergunta);
         if(perguntas[nrpergunta].type == "boolean"){
             //codigo de html com os botoes verdadeiro e falso.
-            $("#contentor").html("");
+            var butoes = "<div id='div_escolha_multipla'>\n\
+                            <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
+                butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+            $("#contentor").html(butoes);
         }else{
             //codigo para escolher um botao aleatoriamente para ser a opcao certa.
             //O primeiro numero do array vai ser o numero que tera a resposta correta
@@ -197,11 +203,11 @@ $(document).ready(function(){
     
     function proximaPergunta(){
         localStorage.setItem('respostas', JSON.stringify(respostas));
-        if((nrpergunta+1) == (perguntas.length+1)){
+        if((nrpergunta+1) == (perguntas.length)){
             //CODIGO PARA ACABAR AS PERGUNTAS - mostrar pontuacao
             mostrarPontuacao();
             //RESET DO JOGO //RESETAR VARIAVEIS GUARDADAS NO BROWSER
-            resetVariaveis();
+            //resetVariaveis();
             //VOLTAR A PAGINA INICIAL
         }else{
             comecarAsPerguntas((nrpergunta+1));
@@ -209,17 +215,29 @@ $(document).ready(function(){
     }
     
     function mostrarPontuacao(){
-        var html = "";
-        for(int i = 0;i<= perguntas.length; i++){
-            
+        var pont = 0;
+        //fazer as contas apra a pontuacao
+        for(var i = 0; i<= respostas.length; i++){
+            if(respostas[i] == 3){
+                pont++;
+            }
         }
-        $("#contentor").html("<div id='div_iniciar_jogo'>\n\
-                            <h2>Opções do jogo: </h2>\n\
-                            <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
-                            <p>Categoria: "+ scategoria +"</p><br>\n\
-                            Nome do jogador: <input type='text' id='username' name='username'><br>\n\
-                            <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
-                        </div>"); 
+        //generar html com os resultados finais
+        var html =  "<div id='pontuacao' style='overflow-y: scroll;height:100%;'>\n\
+                        <h1 style='text-align: center' id='hpontuacao'> PONTUACAO FINAL: " + pont + "/" + perguntas.length + "</h1><br><br><br>";
+        for(var i = 0; i < perguntas.length; i++){
+            html +="<div id='divpontuacao" + i + "' class='divpontuacoes'>\n\
+                        <h3>" + (i+1) + " - " + perguntas[i].question + "</h3>\n\
+                        <button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + perguntas[i].correct_answer + "</button>";
+            
+            if(respostas[i] != 3){
+                html += "<button type='button' style='margin:30px; height: 50px; font-size: 20px;' class='btn btn-danger'>" + perguntas[i].incorrect_answers[respostas[i]]; + "</button>";
+            }
+            
+            html += "</div>";
+        }
+        html += "</div>"
+        $("#contentor").html(html); 
     }
     
     function resetVariaveis(){
