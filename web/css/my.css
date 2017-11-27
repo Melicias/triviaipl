@@ -88,3 +88,23 @@
     /*height: 100px;*/
     font-size: 25px;
 }
+
+.butaofav_empty{
+    background: url(../imagens/fav_empty.png);
+    width: 35px;
+    height: 35px;
+    background-repeat: no-repeat;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    float:right;
+}
+
+.butaofav_color{
+    background: url(../imagens/fav_color.png);
+    width: 35px;
+    height: 35px;
+    background-repeat: no-repeat;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    float:right;
+}

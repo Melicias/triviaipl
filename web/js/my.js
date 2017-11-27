@@ -24,6 +24,14 @@ $(document).ready(function(){
     var topTen = new Array();
     
     
+    if (typeof(Storage) !== "undefined") {
+        var retrievedObject = localStorage.getItem('topTen');
+        topTen = JSON.parse(retrievedObject);
+    } else {
+        alert("Your browser does not support Web Storage...");
+    }
+    
+    
     //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
     //Butao adicionar
     $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
@@ -38,6 +46,31 @@ $(document).ready(function(){
                             </div>");  
     });
     
+    $("#btnTopTen").click(function(){
+        var html = "<div id='divTopTen'>";
+        for(var i = 0;i<topTen.length;i++){
+            if(perguntas[nrpergunta].type == "boolean"){
+                //codigo de html com os botoes verdadeiro e falso.
+                var butoes = "<div id='div_true_false'>\n\
+                                <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
+                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                    butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+                $("#contentor").html(butoes);
+            }else{
+                for(var i=1;i<=4;i++){
+                    if(i == correto){
+                        //adicionar a variavel butoes um botao com a respota correta
+                        butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                    }else{
+                        //adicionar a variavel butoes um botao com a incorrectanswers
+                        butoes += "<button id='botaoRespostaIncorreta" + ii + "' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers[ii]; + "</button>";
+                        ii++;
+                    }
+                }
+            }
+        }
+        html+="</div>"
+    });
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
 	sdificuldade = "Fácil";
@@ -152,7 +185,7 @@ $(document).ready(function(){
         localStorage.setItem('nrpergunta', nrpergunta);
         if(perguntas[nrpergunta].type == "boolean"){
             //codigo de html com os botoes verdadeiro e falso.
-            var butoes = "<div id='div_escolha_multipla'>\n\
+            var butoes = "<div id='div_true_false'>\n\
                             <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
                 butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
                 butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
@@ -174,12 +207,31 @@ $(document).ready(function(){
                     ii++;
                 }
             }
-            butoes += "</div>";
+            
+            //butoes += "</div>";
+            butoes += "     <button id='perguntafav' type='button' class='butaofav_empty'>\n\
+                       </div>";
+            
             //adicionar a variavel butoes butoes para adicionar aos favs. FALTA FAZER ISTO
             //codigo de html com 4 botoes para fazer os 4 opcoes de escolhas.
             $("#contentor").html(butoes);
         }
     }
+    
+    $(document).on("click","#perguntafav",function(){
+        if($('#perguntafav').hasClass('butaofav_empty')){
+            $('#perguntafav').removeClass('butaofav_empty');
+            $('#perguntafav').addClass('butaofav_color');
+            topTen.push(perguntas[nrpergunta]);
+            localStorage.setItem('topTen', JSON.stringify(topTen));
+        }else{
+            $('#perguntafav').removeClass('butaofav_color');
+            $('#perguntafav').addClass('butaofav_empty');
+            topTen.pop();
+            localStorage.setItem('topTen', JSON.stringify(topTen));
+        }
+    });
+    
     
     $(document).on("click","#botaoRespostaCorreta",function(){
         respostas.push("3");
