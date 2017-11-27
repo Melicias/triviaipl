@@ -43,6 +43,7 @@ $(document).ready(function(){
                          </div>");
     
     $("#butaoIniciarJogo").click(function(){
+        //favQuestions();
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
                                 <h2>Escolha a dificuldade:</h2>\n\
                                 <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Fácil</button>\n\
@@ -57,29 +58,35 @@ $(document).ready(function(){
     });
     
     $(document).on("click","#btnFavQuestion",function(){
+        favQuestions();
+    });
+    
+    function favQuestions(){
         var html = "<div id='divFavQuestion'>";
         for(var i = 0;i<FavQuestions.length;i++){
             if(FavQuestions[i].type == "boolean"){
                 //codigo de html com os botoes verdadeiro e falso.
-                html += "<div id='div_true_falseFavQuestion'>\n\
+                html += "<div id='div_true_falseFavQuestion' class='divsFavQuestions'>\n\
                              <h2>" + FavQuestions[i].question + "</h2>";
                     html += "<button id='botaoRespostaCorretaFavQuestion' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + FavQuestions[i].correct_answer + "</button>";
                     html += "<button id='botaoRespostaIncorretaFavQuestion' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-danger'>" + FavQuestions[i].incorrect_answers; + "</button>";
-                    html += "</div>"
+                    html += "<button id='perguntafavFavQuestions' type='button' class='butaofav_color'>\n\
+                            </div>";
             }else{
-                html += "<div id='div_escolha_multiplaFavQuestion'>\n\
+                html += "<div id='div_escolha_multiplaFavQuestion' class='divsFavQuestions'>\n\
                             <h2>" +  FavQuestions[i].question + "</h2>";
                 html += "<button id='botaoRespostaCorretaFavQuestion' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + FavQuestions[i].correct_answer + "</button>";
                 for(var ii=0;ii<3;ii++){
                     //adicionar a variavel butoes um botao com a incorrectanswers
                     html += "<button id='botaoRespostaIncorretaFavQuestion' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-danger'>" + FavQuestions[i].incorrect_answers[ii]; + "</button>"; 
                 }
-                html+="</div>"
+                html += "<button id='perguntafavFavQuestions' type='button' class='butaofav_color'>\n\
+                            </div>";
             }
         }
         html+="</div>"
         $("#contentor").html(html);
-    });
+    }
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
 	sdificuldade = "Fácil";
@@ -198,6 +205,8 @@ $(document).ready(function(){
                             <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
                 butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
                 butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+                butoes += "<button id='perguntafav' type='button' class='butaofav_empty'>\n\
+                       </div>";
             $("#contentor").html(butoes);
         }else{
             //codigo para escolher um botao aleatoriamente para ser a opcao certa.
