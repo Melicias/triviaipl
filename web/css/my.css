@@ -29,11 +29,13 @@
 }
 
 #div_butoes_inicio_menu{
+    text-align: -webkit-center;
     display: table;
     margin: 0 auto;
 }
 
 #div_escolher_dificuldade{
+    text-align: -webkit-center;
     display: table;
     margin: 0 auto;
 }
@@ -59,14 +61,16 @@
     display: table;
     margin: 0 auto;
     display: block; 
-    margin:30px;
-    width:200px ;
-    height: 100px;
+    margin:60px;
+    width: 400px;
+    height: 150px;
+    text-align: center;
     font-size: 35px;
     margin: 0 auto;   
 }
 
 #div_iniciar_jogo{
+    text-align: center; 
     display: table;
     margin: 0 auto;  
 }
