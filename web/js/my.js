@@ -39,13 +39,14 @@ $(document).ready(function(){
     //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
     //Butao adicionar
     $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
-                            <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
-                         </div>");
-    
+                    <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
+                    <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+          </div>");
+
     $("#butaoIniciarJogo").click(function(){
         //favQuestions();
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
-                                <h2>Escolha a dificuldade:</h2>\n\
+                                <h1>Escolha a Dificuldade</h1>\n\
                                 <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Fácil</button>\n\
                                 <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Média</button>\n\
                             </div>");  
@@ -57,8 +58,16 @@ $(document).ready(function(){
                              </div>");
     });
     
-    $(document).on("click","#btnFavQuestion",function(){
+    
+    
+    $(document).on("click","#btnTopTen",function(event){
+        //favQuestions();
+        event.preventDefault();
+    });
+    
+    $(document).on("click","#btnFavQuestion",function(event){
         favQuestions();
+        event.preventDefault();
     });
     
     function favQuestions(){
@@ -70,7 +79,7 @@ $(document).ready(function(){
                              <h2>" + FavQuestions[i].question + "</h2>";
                     html += "<button id='botaoRespostaCorretaFavQuestion' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + FavQuestions[i].correct_answer + "</button>";
                     html += "<button id='botaoRespostaIncorretaFavQuestion' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-danger'>" + FavQuestions[i].incorrect_answers; + "</button>";
-                    html += "<button id='perguntafavFavQuestions' type='button' class='butaofav_color'>\n\
+                    html += "<button id='perguntafavFavQuestions' type='button' class='butaofav_color' value='" + i + "'>\n\
                             </div>";
             }else{
                 html += "<div id='div_escolha_multiplaFavQuestion' class='divsFavQuestions'>\n\
@@ -80,7 +89,7 @@ $(document).ready(function(){
                     //adicionar a variavel butoes um botao com a incorrectanswers
                     html += "<button id='botaoRespostaIncorretaFavQuestion' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-danger'>" + FavQuestions[i].incorrect_answers[ii]; + "</button>"; 
                 }
-                html += "<button id='perguntafavFavQuestions' type='button' class='butaofav_color'>\n\
+                html += "<button id='perguntafavFavQuestions' type='button' class='butaofav_color' value='" + i + "'>\n\
                             </div>";
             }
         }
@@ -88,11 +97,19 @@ $(document).ready(function(){
         $("#contentor").html(html);
     }
     
+    
+    $(document).on("click","#perguntafavFavQuestions",function(){
+        FavQuestions.splice($(this).val(),1);
+        localStorage.setItem('FavQuestions', JSON.stringify(FavQuestions));
+        favQuestions();
+    });
+    
+    
+    
     $(document).on("click","#butaoDificuldadeFacil",function(){
 	sdificuldade = "Fácil";
         escolherDificuldade("easy");
     });
-    
     $(document).on("click","#butaoDificuldadeMedia",function(){
 	sdificuldade = "Média";
         escolherDificuldade("medium");
@@ -102,6 +119,7 @@ $(document).ready(function(){
     function escolherDificuldade(id){
         dificuldade = id;
         $("#contentor").html("<div id='div_escolher_categoria'>\n\
+                                <h1>Escolha a categoria</h1>\n\
                                 <button type='button' id='botaoinformatica' class='btn btn-primary butoesCategoria'>Informática</button>\n\
                                 <button type='button' id='botaojogos' class='btn btn-primary butoesCategoria'>Video-Jogos</button>\n\
                                 <button type='button' id='botaodesporto' class='btn btn-primary butoesCategoria'>Desporto</button>\n\
@@ -157,12 +175,13 @@ $(document).ready(function(){
 	
     function iniciarJogo(){
         $("#contentor").html("<div id='div_iniciar_jogo'>\n\
-                        <h2>Opções do jogo: </h2>\n\
-                        <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
-                        <p>Categoria: "+ scategoria +"</p><br>\n\
-                        Nome do jogador: <input type='text' id='username' name='username'><br>\n\
+                        <h2>Opções do jogo</h2><br>\n\
+                        <h3>Dificuldade: "+ sdificuldade +"</h3><br>\n\
+                        <h3>Categoria: "+ scategoria +" </h3><br>\n\
+                        <input type='text' id='username' name='username' placeholder='Introduza o seu nome...' style=text-align:center><br>\n\
                         <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
                     </div>"); 
+      
     }
 
     $(document).on("click","#iniciarJogoUsername",function(){
