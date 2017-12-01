@@ -21,12 +21,16 @@ $(document).ready(function(){
     //no array respotas tera o valor 3 caso tenha acertado na respota e tera o valor 0;1;2 caso tenha errada na pergunta e o seu valor ira corresponder a sau posicao no array de incorretas
     var respostas = new Array();
     var favs = new Array();
-    var topTen = new Array();
+    var FavQuestions = new Array();
     
     
     if (typeof(Storage) !== "undefined") {
-        var retrievedObject = localStorage.getItem('topTen');
-        topTen = JSON.parse(retrievedObject);
+        localStorage.setItem('topTen', JSON.stringify(favs));
+        var retrievedObject = localStorage.getItem('FavQuestions');
+        FavQuestions = JSON.parse(retrievedObject);
+        if(FavQuestions == null){
+            FavQuestions = new Array();
+        }
     } else {
         alert("Your browser does not support Web Storage...");
     }
@@ -35,49 +39,84 @@ $(document).ready(function(){
     //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
     //Butao adicionar
     $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
+<<<<<<< HEAD
                       <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
                      </div>");
     });
     
+=======
+                    <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
+                    <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+          </div>");
+
+>>>>>>> 25fe8d1b6c9b68a7ca27eb0f5d270e8f403d98f0
     $("#butaoIniciarJogo").click(function(){
+        //favQuestions();
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
-                                <h2>Escolha a dificuldade:</h2>\n\
+                                <h1>Escolha a Dificuldade</h1>\n\
                                 <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Fácil</button>\n\
                                 <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Média</button>\n\
                             </div>");  
     });
     
-    $("#btnTopTen").click(function(){
-        var html = "<div id='divTopTen'>";
-        for(var i = 0;i<topTen.length;i++){
-            if(perguntas[nrpergunta].type == "boolean"){
+    $("#btnHome").click(function(){
+         $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
+                                <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+                             </div>");
+    });
+    
+    
+    
+    $(document).on("click","#btnTopTen",function(event){
+        //favQuestions();
+        event.preventDefault();
+    });
+    
+    $(document).on("click","#btnFavQuestion",function(event){
+        favQuestions();
+        event.preventDefault();
+    });
+    
+    function favQuestions(){
+        var html = "<div id='divFavQuestion'>";
+        for(var i = 0;i<FavQuestions.length;i++){
+            if(FavQuestions[i].type == "boolean"){
                 //codigo de html com os botoes verdadeiro e falso.
-                var butoes = "<div id='div_true_false'>\n\
-                                <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
-                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
-                    butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
-                $("#contentor").html(butoes);
+                html += "<div id='div_true_falseFavQuestion' class='divsFavQuestions'>\n\
+                             <h2>" + FavQuestions[i].question + "</h2>";
+                    html += "<button id='botaoRespostaCorretaFavQuestion' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + FavQuestions[i].correct_answer + "</button>";
+                    html += "<button id='botaoRespostaIncorretaFavQuestion' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-danger'>" + FavQuestions[i].incorrect_answers; + "</button>";
+                    html += "<button id='perguntafavFavQuestions' type='button' class='butaofav_color' value='" + i + "'>\n\
+                            </div>";
             }else{
-                for(var i=1;i<=4;i++){
-                    if(i == correto){
-                        //adicionar a variavel butoes um botao com a respota correta
-                        butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
-                    }else{
-                        //adicionar a variavel butoes um botao com a incorrectanswers
-                        butoes += "<button id='botaoRespostaIncorreta" + ii + "' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers[ii]; + "</button>";
-                        ii++;
-                    }
+                html += "<div id='div_escolha_multiplaFavQuestion' class='divsFavQuestions'>\n\
+                            <h2>" +  FavQuestions[i].question + "</h2>";
+                html += "<button id='botaoRespostaCorretaFavQuestion' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-success'>" + FavQuestions[i].correct_answer + "</button>";
+                for(var ii=0;ii<3;ii++){
+                    //adicionar a variavel butoes um botao com a incorrectanswers
+                    html += "<button id='botaoRespostaIncorretaFavQuestion' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-danger'>" + FavQuestions[i].incorrect_answers[ii]; + "</button>"; 
                 }
+                html += "<button id='perguntafavFavQuestions' type='button' class='butaofav_color' value='" + i + "'>\n\
+                            </div>";
             }
         }
         html+="</div>"
+        $("#contentor").html(html);
+    }
+    
+    
+    $(document).on("click","#perguntafavFavQuestions",function(){
+        FavQuestions.splice($(this).val(),1);
+        localStorage.setItem('FavQuestions', JSON.stringify(FavQuestions));
+        favQuestions();
     });
+    
+    
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
 	sdificuldade = "Fácil";
         escolherDificuldade("easy");
     });
-    
     $(document).on("click","#butaoDificuldadeMedia",function(){
 	sdificuldade = "Média";
         escolherDificuldade("medium");
@@ -143,12 +182,13 @@ $(document).ready(function(){
 	
     function iniciarJogo(){
         $("#contentor").html("<div id='div_iniciar_jogo'>\n\
-                        <h2>Opções do jogo: </h2>\n\
-                        <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
-                        <p>Categoria: "+ scategoria +"</p><br>\n\
-                        Nome do jogador: <input type='text' id='username' name='username'><br>\n\
+                        <h2>Opções do jogo</h2><br>\n\
+                        <h3>Dificuldade: "+ sdificuldade +"</h3><br>\n\
+                        <h3>Categoria: "+ scategoria +" </h3><br>\n\
+                        <input type='text' id='username' name='username' placeholder='Introduza o seu nome...' style=text-align:center><br>\n\
                         <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
                     </div>"); 
+      
     }
 
     $(document).on("click","#iniciarJogoUsername",function(){
@@ -191,6 +231,8 @@ $(document).ready(function(){
                             <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
                 butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
                 butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+                butoes += "<button id='perguntafav' type='button' class='butaofav_empty'>\n\
+                       </div>";
             $("#contentor").html(butoes);
         }else{
             //codigo para escolher um botao aleatoriamente para ser a opcao certa.
@@ -224,13 +266,13 @@ $(document).ready(function(){
         if($('#perguntafav').hasClass('butaofav_empty')){
             $('#perguntafav').removeClass('butaofav_empty');
             $('#perguntafav').addClass('butaofav_color');
-            topTen.push(perguntas[nrpergunta]);
-            localStorage.setItem('topTen', JSON.stringify(topTen));
+            FavQuestions.push(perguntas[nrpergunta]);
+            localStorage.setItem('FavQuestions', JSON.stringify(FavQuestions));
         }else{
             $('#perguntafav').removeClass('butaofav_color');
             $('#perguntafav').addClass('butaofav_empty');
-            topTen.pop();
-            localStorage.setItem('topTen', JSON.stringify(topTen));
+            FavQuestions.pop();
+            localStorage.setItem('FavQuestions', JSON.stringify(FavQuestions));
         }
     });
     
