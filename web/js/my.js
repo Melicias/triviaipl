@@ -8,6 +8,8 @@
  * 
  */
 
+/* global ii */
+
 $(document).ready(function(){
     //$("#contentor").load("inicio_menu.html");
     
@@ -71,6 +73,16 @@ $(document).ready(function(){
             }
         }
         html+="</div>"
+    });
+      $(document).on("click","#btnTopTen",function(){
+	$("#contentor").html("<div id='div_escolher_categoria'>\n\
+                                <h1>Escolha a categoria</h1>\n\
+                                <button type='button' id='botaoinformatica' class='btn btn-primary butoesCategoria'>Informática</button>\n\
+                                <button type='button' id='botaojogos' class='btn btn-primary butoesCategoria'>Video-Jogos</button>\n\
+                                <button type='button' id='botaodesporto' class='btn btn-primary butoesCategoria'>Desporto</button>\n\
+                                <button type='button' id='botaoRandom' class='btn btn-primary butoesCategoria'>Random</button>\n\
+                              </div>"); 
+        
     });
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
