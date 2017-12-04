@@ -8,8 +8,6 @@
  * 
  */
 
-/* global ii */
-
 $(document).ready(function(){
     //$("#contentor").load("inicio_menu.html");
     
@@ -75,6 +73,7 @@ $(document).ready(function(){
         html+="</div>"
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
       $(document).on("click","#btnTopTen",function(){
 	$("#contentor").html("<div id='div_escolher_categoria'>\n\
                                 <h1>Escolha a categoria</h1>\n\
@@ -87,6 +86,8 @@ $(document).ready(function(){
     });
 =======
 >>>>>>> parent of 09edea6... Merge branch 'master' of https://github.com/Melicias/triviaipl
+=======
+>>>>>>> parent of a11c2d9... Changing Main Page
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
 	sdificuldade = "Fácil";
