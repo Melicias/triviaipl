@@ -74,6 +74,7 @@ $(document).ready(function(){
         }
         html+="</div>"
     });
+<<<<<<< HEAD
       $(document).on("click","#btnTopTen",function(){
 	$("#contentor").html("<div id='div_escolher_categoria'>\n\
                                 <h1>Escolha a categoria</h1>\n\
@@ -84,6 +85,8 @@ $(document).ready(function(){
                               </div>"); 
         
     });
+=======
+>>>>>>> parent of 09edea6... Merge branch 'master' of https://github.com/Melicias/triviaipl
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
 	sdificuldade = "Fácil";
