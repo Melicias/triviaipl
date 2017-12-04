@@ -35,7 +35,10 @@ $(document).ready(function(){
     //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
     //Butao adicionar
     $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
-                      <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primari btn-lg' >Iniciar Jogo</button>\n\
+                              <h2 style=text-align: -webkit-center; \n\
+                              Escolha a dificuldade:</h2> \n\
+                              <img src='imagens/trivia.png' alt='triviaimg' height='100px' width='200px'>\n\
+                              <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primari btn-lg' >Iniciar Jogo</button>\n\
                      </div>");
     });
     
@@ -43,8 +46,8 @@ $(document).ready(function(){
     $(document).on("click","#butaoIniciarJogo",function(){
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
                                 <h2>Escolha a dificuldade:</h2>\n\
-                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Fácil</button>\n\
-                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Média</button>\n\
+                                <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primari'>Fácil</button>\n\
+                                <button id='butaoDificuldadeMedia' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primari'>Média</button>\n\
                             </div>");  
     });
     
@@ -55,17 +58,17 @@ $(document).ready(function(){
                 //codigo de html com os botoes verdadeiro e falso.
                 var butoes = "<div id='div_true_false'>\n\
                                 <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
-                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
-                    butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primari'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                    butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primari'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
                 $("#contentor").html(butoes);
             }else{
                 for(var i=1;i<=4;i++){
                     if(i == correto){
                         //adicionar a variavel butoes um botao com a respota correta
-                        butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                        butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primari'>" + perguntas[nrpergunta].correct_answer + "</button>";
                     }else{
                         //adicionar a variavel butoes um botao com a incorrectanswers
-                        butoes += "<button id='botaoRespostaIncorreta" + ii + "' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers[ii]; + "</button>";
+                        butoes += "<button id='botaoRespostaIncorreta" + ii + "' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primari'>" + perguntas[nrpergunta].incorrect_answers[ii]; + "</button>";
                         ii++;
                     }
                 }
@@ -89,10 +92,10 @@ $(document).ready(function(){
         dificuldade = id;
         $("#contentor").html("<div id='div_escolher_categoria'>\n\
                                 <h1>Escolha a categoria</h1>\n\
-                                <button type='button' id='botaoinformatica' class='btn btn-primary butoesCategoria'>Informática</button>\n\
-                                <button type='button' id='botaojogos' class='btn btn-primary butoesCategoria'>Video-Jogos</button>\n\
-                                <button type='button' id='botaodesporto' class='btn btn-primary butoesCategoria'>Desporto</button>\n\
-                                <button type='button' id='botaoRandom' class='btn btn-primary butoesCategoria'>Random</button>\n\
+                                <button type='button' id='botaoinformatica' class='btn btn-primari butoesCategoria'>Informática</button>\n\
+                                <button type='button' id='botaojogos' class='btn btn-primari butoesCategoria'>Video-Jogos</button>\n\
+                                <button type='button' id='botaodesporto' class='btn btn-primari butoesCategoria'>Desporto</button>\n\
+                                <button type='button' id='botaoRandom' class='btn btn-primari butoesCategoria'>Random</button>\n\
                               </div>"); 
     }
     
@@ -144,11 +147,11 @@ $(document).ready(function(){
 	
     function iniciarJogo(){
         $("#contentor").html("<div id='div_iniciar_jogo'>\n\
-                        <h2>Opções do jogo: </h2>\n\
-                        <p>Dificuldade: "+ sdificuldade +"</p><br>\n\
-                        <p>Categoria: "+ scategoria +"</p><br>\n\
-                        Nome do jogador: <input type='text' id='username' name='username'><br>\n\
-                        <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Iniciar</button>\n\
+                        <h1>Opções do jogo: </h1><br>\n\
+                        <h2>Dificuldade: "+ sdificuldade +"</h2><br>\n\
+                        <h2>Categoria: "+ scategoria +"</h2><br>\n\
+                        <h2>Nome do jogador: <br><input type='text' id='username' name='username' style= color:black></h2><br>\n\
+                        <button id='iniciarJogoUsername' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primari'>Iniciar</button>\n\
                     </div>"); 
     }
 
@@ -190,8 +193,8 @@ $(document).ready(function(){
             //codigo de html com os botoes verdadeiro e falso.
             var butoes = "<div id='div_true_false'>\n\
                             <h2>" + (nrpergunta+1) + " - " + perguntas[nrpergunta].question + "</h2>";
-                butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
-                butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
+                butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primari'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                butoes += "<button id='botaoRespostaIncorreta0' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primari'>" + perguntas[nrpergunta].incorrect_answers; + "</button>";
             $("#contentor").html(butoes);
         }else{
             //codigo para escolher um botao aleatoriamente para ser a opcao certa.
@@ -203,10 +206,10 @@ $(document).ready(function(){
             for(var i=1;i<=4;i++){
                 if(i == correto){
                     //adicionar a variavel butoes um botao com a respota correta
-                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].correct_answer + "</button>";
+                    butoes += "<button id='botaoRespostaCorreta' type='button' style='display: block; margin:30px; height: 50px; font-size: 20px;' class='btn btn-primari'>" + perguntas[nrpergunta].correct_answer + "</button>";
                 }else{
                     //adicionar a variavel butoes um botao com a incorrectanswers
-                    butoes += "<button id='botaoRespostaIncorreta" + ii + "' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primary'>" + perguntas[nrpergunta].incorrect_answers[ii]; + "</button>";
+                    butoes += "<button id='botaoRespostaIncorreta" + ii + "' type='button' style='display: block; margin:30px;  height: 50px; font-size: 20px;' class='btn btn-primari'>" + perguntas[nrpergunta].incorrect_answers[ii]; + "</button>";
                     ii++;
                 }
             }
