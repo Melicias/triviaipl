@@ -35,11 +35,12 @@ $(document).ready(function(){
     //REMOVER O COMENTARIO PARA O CODIGO FUNCIONAR
     //Butao adicionar
     $("#contentor").html("<div id='div_butoes_inicio_menu'>\n\
-                      <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primary btn-lg' >Iniciar Jogo</button>\n\
+                      <button id='butaoIniciarJogo' type='button' style='display: block; margin:15px; width:250px ; height: 125px; font-size: 35px;' class='btn btn-primari btn-lg' >Iniciar Jogo</button>\n\
                      </div>");
     });
     
-    $("#butaoIniciarJogo").click(function(){
+
+    $(document).on("click","#butaoIniciarJogo",function(){
         $("#contentor").html("<div id='div_escolher_dificuldade'>\n\
                                 <h2>Escolha a dificuldade:</h2>\n\
                                 <button id='butaoDificuldadeFacil' type='button' style=' margin:30px; width:200px ; height: 100px; font-size: 35px;' class='btn btn-primary'>Fácil</button>\n\
@@ -72,22 +73,6 @@ $(document).ready(function(){
         }
         html+="</div>"
     });
-<<<<<<< HEAD
-<<<<<<< HEAD
-      $(document).on("click","#btnTopTen",function(){
-	$("#contentor").html("<div id='div_escolher_categoria'>\n\
-                                <h1>Escolha a categoria</h1>\n\
-                                <button type='button' id='botaoinformatica' class='btn btn-primary butoesCategoria'>Informática</button>\n\
-                                <button type='button' id='botaojogos' class='btn btn-primary butoesCategoria'>Video-Jogos</button>\n\
-                                <button type='button' id='botaodesporto' class='btn btn-primary butoesCategoria'>Desporto</button>\n\
-                                <button type='button' id='botaoRandom' class='btn btn-primary butoesCategoria'>Random</button>\n\
-                              </div>"); 
-        
-    });
-=======
->>>>>>> parent of 09edea6... Merge branch 'master' of https://github.com/Melicias/triviaipl
-=======
->>>>>>> parent of a11c2d9... Changing Main Page
     
     $(document).on("click","#butaoDificuldadeFacil",function(){
 	sdificuldade = "Fácil";
